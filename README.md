@@ -1,5 +1,5 @@
 # rageserver
-Modded Source from MarkCavalli the rageserver
+Modded Source from MarkCavalli the rageserver & its not final finished
 
 Hello!
 All about this server you can read at:
