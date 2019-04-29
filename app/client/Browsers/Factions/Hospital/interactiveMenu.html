@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>RageV.de | Hospital Interaktion Menu Page</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../assets/plugins/pace/pace.min.js"></script>
+	<link rel="stylesheet" href="interactiveMenu.css">
+	<script src="../../vue.js"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+
+	<div id="page-container" class="fade page-without-sidebar page-header-fixed">
+	
+		<!-- START: section anpassen | entweder section oder div -->
+		<section id="app">
+		<!-- ENDE: section anpassen | entweder section oder div -->
+		
+		<div id="header" class="header navbar-default">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand"><span class="navbar-logo"></span> <b>Rage V</b> Hospital Interaktion Menu Page</a>
+			</div>
+			<ul class="navbar-nav navbar-right">
+				<li class="dropdown navbar-user">
+					<a href="#" class="dropdown-toggle" id="close-button" @click="exit">
+						<span class="d-none d-md-inline"><b>X</b></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="content" class="content">		
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+					
+					<!-- START: {{ titleText }} anpassen -->
+					
+					<h4 class="panel-title"><img src="hospital.png"> Hospital Interaktion Menu Page </h4>
+					
+					<!-- ENDE: {{ titleText }} anpassen -->
+				</div>
+                <div class="panel-body">
+
+                    <!-- START: Template anpassen -->
+
+			<div class="content">
+					<div class="form-control-lg">
+						{{ patientName }}<br>
+						<span>{{ currentPatientText }}</span>
+					</div>
+		
+					<section class="form-group m-b-15">
+						<div class="item" v-on:click="increase">
+							<div>{{ increaseText }}</div>
+							<div class="item_price">$500</div>
+						</div>
+						<div class="item" @click="heal">
+							<div>{{ healText }}</div>
+							<div class="item_price">$5 000</div>
+						</div>
+					</section>
+				
+				<!-- ENDE: Template anpassen -->
+				
+				</div>
+			</div>
+		</div>
+		
+		<!-- START: section anpassen | entweder section oder div -->
+		</section>
+		<!-- ENDE: section anpassen | entweder section oder div -->
+		
+	</div>
+
+	<script src="../../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../../assets/js/theme/default.min.js"></script>
+	<script src="../../assets/js/apps.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+</body>
+</html>
+
+<script>
+const app = new Vue({
+	el: '#app',
+	data: {
+		patientId: 0,
+		patientName: "",
+		currentPatientText: "Current patient:", 
+		increaseText: "Increase healing speed",
+		healText: "Heal",
+	},
+	methods: {
+		increase: function() {
+			mp.trigger("cMisc-CallServerEvent", "sHospital-IncreaseHealingSpeed", this.patientId);
+			this.exit();
+		},
+		
+		heal: function() {
+			mp.trigger("cMisc-CallServerEvent", "sHospital-Heal", this.patientId);
+			this.exit();
+		},
+
+
+		exit: function() {
+			mp.trigger("cCloseCef"); 
+		},
+	}
+});
+
+
+
+function loadRusLang() {
+	app.currentPatientText = "Текущий пациент";
+	app.increaseText = "Увеличить скорость выздоровления";
+	app.healText = "Вылечить";
+}
+
+function loadGerLang() {
+	app.currentPatientText = "Aktueller Patient:";
+	app.increaseText = "Erhöhen Sie die Wiederherstellungsrate";
+	app.healText = "Patient Heilen";
+}
+
+function loadBrLang() {
+	
+}
+
+function loadzh_CNLang() {
+	app.currentPatientText = "当前病患";
+	app.increaseText = "加速治疗";
+	app.healText = "治疗";
+}
+
+function loadzh_TWLang() {
+	app.currentPatientText = "當前病患";
+	app.increaseText = "加速治療";
+	app.healText = "治療";
+}
+</script>

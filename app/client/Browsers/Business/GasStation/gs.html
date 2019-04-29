@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>RageV.de | Gas Station Page</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../assets/plugins/pace/pace.min.js"></script>
+	<link rel="stylesheet" href="gs.css">
+	<script src="../../vue.js"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade page-without-sidebar page-header-fixed">
+		<!-- begin #header -->
+		<section id="app">
+		<div id="header" class="header navbar-default">
+			<!-- begin navbar-header -->
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand"><span class="navbar-logo"></span> <b>Rage V</b> Gas Station</a>
+			</div>
+			<!-- end navbar-header -->
+			<!-- begin header-nav -->
+			<ul class="navbar-nav navbar-right">
+				<li class="dropdown navbar-user">
+					<a href="#" class="dropdown-toggle" id="close-button" @click="exit">
+						<span class="d-none d-md-inline"><b>X</b></span>
+					</a>
+				</li>
+			</ul>
+			<!-- end header navigation right -->
+		</div>
+		<!-- end #header -->
+		
+		<!-- begin #content -->
+		<div id="content" class="content">		
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+					<h4 class="panel-title"><img src="ragev-gs.png"> {{ titleText }} </h4>
+				</div>
+				<div class="panel-body">
+			<div class="info-b">
+				<div class="info-b_price dollar">{{ priceForLitre }}</div>
+				<div class="info-b_price_info">{{ forLitreText }}</div>
+			</div>				
+			<div v-if="currentCar">
+				<div class="car">
+					{{ currentCar.title }}
+					<span>{{ currentCar.numberPlate }}</span>
+				</div>
+				<div class="fill-info">
+					<div class="fill-info_litres">
+						<input type="text" v-model="litres" @input="updatePrice">L
+					</div>
+					{{ forText }}
+					<span class="fill-info_price dollar">{{ price }}</span>
+				</div>
+				<div class="fill" @click="fillUp">{{ fillUpText }}</div>
+			</div>
+			
+				<div class="car hover" v-for="car in cars" @click="setCurrentCar(car)">
+					{{ car.title }}
+					<span>{{ car.numberPlate }}</span>
+				</div>
+
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+		</section>
+		<!-- end #content -->
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../../assets/js/theme/default.min.js"></script>
+	<script src="../../assets/js/apps.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+</body>
+</html>
+<script>
+const app = new Vue({
+el: '#app',
+data: {
+	id: 4,
+	titleText: "Gas Station",
+	forLitreText: "for litre",
+	fillUpText: "Fill Up",
+	forText: "for",
+	margin: 12,
+	priceForLitre: 0,
+	currentCar: false,
+	litres: 0,
+	price: 0,
+	cars: [	],
+},
+	methods: {
+		prettify: function(num) {
+			let n = num.toString();
+			const separator = " ";
+			return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + separator);
+		},
+		
+		roundNum: function(number, ends = 0) {
+			return parseFloat(number.toFixed(ends));
+		},
+		
+		updatePriceForLitre: function() {
+			this.priceForLitre = 1 + 0.02 * this.margin;
+		},
+			
+		updatePrice: function() {
+			this.price = Math.ceil(this.litres * this.priceForLitre);
+		},
+		
+		setCurrentCar: function(car) {
+			this.currentCar = car;
+			this.litres = this.roundNum(car.fuelTank - car.fuel, 2);
+			this.updatePrice();
+		},
+
+		updateCars: function(carsString) {
+			const cars = JSON.parse(carsString);
+			this.cars = cars;
+		},
+
+		fillUp: function() {
+			const obj = {
+				id: this.currentCar.id,
+				litres: +this.litres,
+			}
+			mp.trigger("cMisc-CallServerEvent", "sGasStation-FillUp", JSON.stringify(obj));
+			this.exit();
+		},
+		
+		exit: function() {
+			mp.trigger("cCloseCefAndDestroyCam");
+		},
+	},
+
+});
+
+
+function loadGerLang() {
+	app.titleText = "Tankstelle";
+	app.forLitreText = "pro Liter";
+	app.fillUpText = "Bezahl jetzt";
+	app.forText = "für";
+}
+</script>

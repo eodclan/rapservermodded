@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>RageV.de | Steinpilz Job Page</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="../../assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../assets/plugins/pace/pace.min.js"></script>
+	<link rel="stylesheet" href="collector.css">
+	<script src="../../vue.js"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	<div class="main" id="app">	
+	<!-- begin #page-container -->
+	<div id="page-container" class="page-container fade page-without-sidebar page-header-fixed page-with-top-menu">
+		<!-- begin #header -->
+		<div id="header" class="header navbar-default">
+			<!-- begin navbar-header -->
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand"><span class="navbar-logo"></span> <b>Rage V</b> Steinpilz Job</a>
+				<button type="button" class="navbar-toggle" data-click="top-menu-toggled">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>	
+			<ul class="navbar-nav navbar-right">
+				<li class="dropdown navbar-user">
+					<a href="#" class="dropdown-toggle" id="close-button" @click="exit">
+						<span class="d-none d-md-inline"><b>X</b></span>
+					</a>
+				</li>
+			</ul>				
+			<!-- end navbar-header -->
+		</div>
+		<!-- end #header -->
+
+		<!-- begin #top-menu -->
+		<div id="top-menu" class="top-menu">
+			<!-- begin top-menu nav -->
+			<ul class="nav">
+				<li class="has-sub">
+					<a href="javascript:;">
+						<span class="logo"></span>
+						<span>Navigation</span>
+					</a>
+					<ul class="sub-menu">
+						<li id="app">
+							<a v-if="start" @click="startWork">{{ startText }}</a>
+							<a v-if="finish" @click="finishWork">{{ finishText }}</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<!-- end top-menu nav -->
+		</div>
+		<!-- end #top-menu -->
+
+
+		<!-- begin #content -->
+		<div id="content" class="content">
+		
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">i</a>
+					</div>
+					<h4 class="panel-title"><img src="ragev-oj.png"> Steinpilz Job</h4>
+				</div>
+				<div class="panel-body">
+
+                    <div class="message">
+                        {{ messageText1 }}
+                        <br><br>
+                        {{ messageText2 }}
+                        <br><br>
+                        {{ messageText3 }}
+                        <br><br>
+                        {{ messageText4 }}
+                    </div>
+
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+		<!-- end #content -->
+		
+		<!-- begin scroll to top btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+		<!-- end scroll to top btn -->
+	</div>
+	<!-- end page container -->
+	</div>
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../../assets/js/theme/default.min.js"></script>
+	<script src="../../assets/js/apps.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+</body>
+</html>
+<script>
+const app = new Vue({
+  el: '#app',
+  data: {
+    start: true,
+    finish: false,
+
+    messageText1: "Welcome to Steinpilz Farm!",
+    messageText2: "Collecting and packing of oranges is made manually, therefore tens of thousands of temporary workplaces are opened.",
+    messageText3: "Such work does not require any special knowledge or skills, only physical endurance.",
+    messageText4: "If you like the sweet and heady scent of oranges, and you are in good physical shape - we invite you to work in our farm.",
+   
+    startText: "Start Work!",
+    finishText: "Finish Work!",
+  },
+  methods: {
+    loadFinish: function() {
+      this.start = false;
+      this.finish = true;
+    },
+    startWork: function() {
+      this.exit();
+      mp.trigger("cMisc-CallServerEvent", "sSteinpilz-StartWork");
+    },
+    finishWork: function() {
+      this.exit();
+      mp.trigger("cMisc-CallServerEvent", "sSteinpilz-FinishWork");
+    },
+    exit: function() {
+      mp.trigger("cCloseCef");
+    },
+  }
+});
+
+function loadGerLang() {
+  app.messageText1 = "Willkommen auf der Steinpilz Farm!";
+  app.messageText2 = "Das Sammeln und Verpacken von Tomaten erfolgt manuell, daher werden Zehntausende temporärer Arbeitsplätze geöffnet.";
+  app.messageText3 = "Diese Arbeit erfordert keine besonderen Kenntnisse oder Fähigkeiten, nur körperliche Ausdauer.";
+  app.messageText4 = "Wenn Sie den süßen und berauschenden Duft von Tomaten mögen und sich in guter körperlicher Verfassung befinden, laden wir Sie ein, auf unserem Bauernhof zu arbeiten.";
+  app.startText = "Job annehmen";
+  app.finishText = "Job beenden";
+}
+
+
+function loadRusLang() {
+  app.messageText1 = "Добро пожаловать на Donkey Punch Family Farm!";
+  app.messageText2 = "Сбор и упаковка апельсинов проходит вручную, поэтому в сезон открываются десятки тысяч рабочих мест.";
+  app.messageText3 = "Такая работа не требует специальных знаний и умений, кроме хорошей физической формы.";
+  app.messageText4 = "Если вам по душе сладкий и пьянящий запах апельсинов и вы полны сил - мы ждем вас на нашей ферме!";
+  app.startText = "Начать работать!";
+  app.finishText = "Закончить работу!";
+}
+
+function loadBrLang() {
+  app.messageText1 = "Bem-vindo à Fazenda da Família Donkey Punch!";
+  app.messageText2 = "Coleta e embalagem de laranjas é feita manualmente, portanto, dezenas de milhares de locais de trabalho temporários são abertos.";
+  app.messageText3 = "Esse trabalho não requer nenhum conhecimento ou habilidade especial, apenas resistência física.";
+  app.messageText4 = "Se você gosta do cheiro doce e inebriante das laranjas, e está em boa forma física - nós o convidamos a trabalhar em nossa fazenda!";
+  app.startText = "Começar a trabalhar!";
+  app.finishText = "Encerrar trabalho!";
+}
+
+function loadZhsLang() {
+  app.messageText1 = "欢迎来到野猴拳农场！";
+  app.messageText2 = "由于没有金克拉，洛圣都农业不发达，收橙子打包都需要人手处理，总统得感谢我们降低失业率。";
+  app.messageText3 = "这些工作都不用大脑，只需要费力搬砖。";
+  app.messageText4 = "如果你喜欢爽过吸大麻的橙子，以及你体力过剩-我们欢迎你为我们效劳。";
+  app.startText = "开始打工！";
+  app.finishText = "辞职不干！";
+}
+function loadZhtLang() {
+  app.messageText1 = "歡迎來到野猴拳農場！";
+  app.messageText2 = "收橙和包裝都需要人手處理，總統應該感謝我們為他降低失業率。";
+  app.messageText3 = "這些工作都不用思考，只需要用臂力打工。";
+  app.messageText4 = "如果你喜歡洛圣都陽光培養的鮮美多汁的橙，以及你體力過剩-我們歡迎你為我們效勞。";
+  app.startText = "開始打工！";
+  app.finishText = "辭職不幹！";
+}
+</script>

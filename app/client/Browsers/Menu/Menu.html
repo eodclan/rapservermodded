@@ -1,0 +1,722 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>Rage V | Player Menu</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../assets/plugins/pace/pace.min.js"></script>
+	<script src="../vue.js"></script>
+	<link rel="stylesheet" href="menu.css">		
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	<div class="main" id="app">	
+	<!-- begin #page-container -->
+	<div id="page-container" class="page-container fade page-without-sidebar page-header-fixed page-with-top-menu">
+		<!-- begin #header -->
+		<div id="header" class="header navbar-default">
+			<!-- begin navbar-header -->
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand"><span class="navbar-logo"></span> <b>Rage V</b> Player Menu</a>
+				<button type="button" class="navbar-toggle" data-click="top-menu-toggled">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>	
+			<ul class="navbar-nav navbar-right">
+				<li class="dropdown navbar-user">
+					<a href="#" class="dropdown-toggle" id="close-button" @click="exit">
+						<span class="d-none d-md-inline"><b>X</b></span>
+					</a>
+				</li>
+			</ul>				
+			<!-- end navbar-header -->
+		</div>
+		<!-- end #header -->
+		
+		<!-- begin #top-menu -->
+		<div id="top-menu" class="top-menu">
+			<!-- begin top-menu nav -->
+			<ul class="nav">
+				<li class="has-sub">
+					<a href="javascript:;">
+						<span class="logo"></span>
+						<span>Navigation</span>
+					</a>
+					<ul class="sub-menu">
+						<li><a v-for="(tab, i) in d.i18n.tabs" :key="tab" @click="currentTab = i" :class="[{ active: currentTab === i }]">{{ tab }}</a></li>
+					</ul>
+				</li>
+			</ul>
+			<!-- end top-menu nav -->
+		</div>
+		<!-- end #top-menu -->
+		
+		<!-- begin #content -->
+		<div id="content" class="content">
+		
+			<!-- begin panel -->
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">i</a>
+					</div>
+					<h4 class="panel-title">Hi {{ pName }}</h4>
+				</div>
+				<div class="panel-body">
+					<section class="content">
+						<transition name="fade" mode="out-in">
+							<component :is="currentTabComponent" :d="d" @set-tab="currentTab = $event" @set-veh="currentVeh = $event"></component>
+						</transition>
+					</section>
+				</div>
+			</div>
+			<!-- end panel -->
+		</div>
+		<!-- end #content -->
+		
+		<!-- begin scroll to top btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+		<!-- end scroll to top btn -->
+	</div>
+	<!-- end page container -->
+	</div>
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../assets/js/theme/default.min.js"></script>
+	<script src="../assets/js/apps.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+</body>
+</html>
+
+
+<script type="text/x-template" id="tab-home">
+	<section class="info tab-home">
+		<div class="b-item" @click="createGPSRoute('ATM')">
+			<img src="img/cash.png">
+			<span class="cash">{{ prettify(d.cash) }}</span>
+			<div>{{ d.i18n.cash }}</div>
+		</div>
+		<div class="b-item">
+			<img src="img/loyality.png">
+			<span>{{ d.loyality }}</span>
+			<div>{{ d.i18n.loyality }}</div>
+		</div>
+		<div class="b-item" @click="$emit('set-tab', 2)">
+			<img src="img/vehicles.png">
+			<span>{{ d.vehicles.length }}</span>
+			<div>{{ d.i18n.tabs[2] }}</div>
+		</div>
+		<div class="b-item" @click="$emit('set-tab', 3)">
+			<img src="img/violations.png">
+			<span style="color: tomato;">{{ d.violations.length }}</span>
+			<div>{{ d.i18n.tabs[3] }}</div>
+		</div>
+	</section>
+</script>
+
+<script type="text/x-template" id="tab-gps">
+	<section class="info tab-vehicles">
+		<div class="veh-list">
+			<a class="veh-item" v-for="(item, i) in d.i18n.gps" @click="currentTab = i" :class="[{ active: currentTab === i }]">
+				<span>{{ item }}</span>
+			</a>
+		</div>
+		<div class="veh-info">
+			<div class="gps" v-if="currentTab === 0">
+				<div class="veh-info_props">
+					<div class="veh-info_prop" @click="createGPSRoute('Gas Station')">
+						<img src="img/gasstation.png">
+						<span>{{ d.i18n.gasStation }}</span>
+					</div>
+					<div class="veh-info_prop" @click="createGPSRoute('ATM')">
+						<img src="img/cash.png">
+						<span style="color: limegreen;">{{ d.i18n.atm }}</span>
+					</div>
+					<div class="veh-info_prop">
+						<img src="img/repair.png">
+						<span>{{ d.i18n.repairStation }}</span>
+					</div>
+					
+				</div>
+				<div class="menu-items" style="border-top: 1px solid #aaa;">
+					<a @click="createGPSRoute('Hospital')">{{ d.i18n.hospital }}</a>
+					<a @click="createGPSRoute('LS Police Department')">{{ d.i18n.lspolicedepartment }}</a>
+					<a @click="createGPSRoute('Prison')">{{ d.i18n.prison }}</a>
+				</div>
+			</div>
+			<div class="gps" v-if="currentTab === 1">
+				<div class="menu-items" style="border-top: 1px solid #aaa;">
+					<a @click="createGPSRoute('Orange Collector')">{{ d.i18n.orangeCollector }}</a>
+					<a @click="createGPSRoute('Cluckin Bell Courier')">{{ d.i18n.cbDeliveryCourier }} <span style="color: tomato" v-if="d.loyality < 50">({{ d.i18n.minLoyality }}: 50)</span></a>
+					<a @click="createGPSRoute('Two Paints')">{{ d.i18n.cbPaintJob }} <span style="color: tomato" v-if="d.loyality < 50">({{ d.i18n.minLoyality }}: 50)</span></a>
+					<a @click="createGPSRoute('Mule Trucker')">{{ d.i18n.muleTrucker }} <span style="color: tomato" v-if="d.loyality < 100">({{ d.i18n.minLoyality }}: 100)</span></a>
+					
+				</div>
+			</div>
+			<div class="gps" v-if="currentTab === 2">
+				<div class="veh-info_props">
+					<div class="veh-info_prop" @click="createGPSRoute('Gas Station')">
+						<img src="img/gasstation.png">
+						<span>{{ d.i18n.gasStation }}</span>
+					</div>
+					<div class="veh-info_prop" @click="createGPSRoute('Clothing Shop')">
+						<img src="img/cloth.png">
+						<span>{{ d.i18n.clothingShop }}</span>
+					</div>
+					<div class="veh-info_prop" @click="createGPSRoute('Barber Shop')">
+						<img src="img/barbershop.png">
+						<span>{{ d.i18n.barberShop }}</span>
+					</div>
+				</div>
+
+				<div class="menu-items gps-findbus">
+					<a>
+						{{ d.i18n.findBusBy }} id -  №<input v-model.number="businessId">
+						<div class="confirm" @click="createGPSRoute('Business', businessId)">✓</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</script>
+
+<script type="text/x-template" id="tab-vehicles">
+	<section class="info tab-vehicles" v-if="d.vehicles.length">
+		<div class="veh-list">
+			<a class="veh-item" v-for="(veh, i) in d.vehicles"  @click="currentVeh = i" :class="[{ active: currentVeh === i }]">
+				<span>{{ veh.title}}</span>
+				<div>{{ veh.number }}</div>
+			</a>
+		</div>
+		<div class="veh-info">
+			<div class="veh-info_title">{{ d.vehicles[currentVeh].title }}</div>
+			<div class="veh-info_number">{{ d.vehicles[currentVeh].number }}</div>
+			<div class="veh-info_props">
+				<div class="veh-info_prop">
+					<img src="img/fueltank.png">
+					<span>{{ d.vehicles[currentVeh].fTank }} L</span>
+					<div>{{ d.i18n.fTank }}</div>
+				</div>
+				<div class="veh-info_prop">
+					<img src="img/cash.png">
+					<span style="color: limegreen;">${{ prettify(d.vehicles[currentVeh].price) }}</span>
+					<div>{{ d.i18n.price }}</div>
+				</div>
+				<div class="veh-info_prop">
+					<img src="img/fuelrate.png">
+					<span>{{ d.vehicles[currentVeh].fRate }}L / 100 km</span>
+					<div>{{ d.i18n.fRate }}</div>
+				</div>
+			</div>
+			<div style="border-top: 1px solid #aaa;">
+				<a class="veh-item" @click="createGPSRoute('Find Vehicle', d.vehicles[currentVeh].id)">
+					<span>{{ d.i18n.findVehicle }}</span>
+					<div>{{ d.i18n.createRoute }}</div>
+				</a>
+				<a class="veh-item" @click="call911Comfirm = !call911Comfirm" :class="[{ lefted: call911Comfirm }]">
+					<span style="color: tomato;">{{ d.i18n.call911 }}</span>
+					<div>{{ d.i18n.repairAndTransport }}</div>
+					<div class="confirm" @click="callNineOneOne(d.vehicles[currentVeh].id)">✓</div>
+				</a>
+				<a class="veh-item" @click="sellToDealerComfirm = !sellToDealerComfirm" :class="[{ lefted: sellToDealerComfirm }]">
+					<span>{{ d.i18n.sellFor }} <span style="color: limegreen;">${{ prettify(Math.round(d.vehicles[currentVeh].price * 0.5)) }}</span> {{ d.i18n.toDealer }}</span>
+					<div class="confirm" @click="sellVehicleToGov(d.vehicles[currentVeh].id)">✓</div>
+				</a>
+				<a class="veh-item" @click="sellToPlayer = !sellToPlayer" v-if="d.passengers.length > 0 && d.currentVehicleId === d.vehicles[currentVeh].id">
+					<span>{{ d.i18n.sellToPassenger }}</span>
+				</a>
+			</div>
+			<div class="sell-for-player" v-if="sellToPlayer">
+				<div class="players">
+					<a v-for="(p, i) in d.passengers" @click="currentPassenger = i" :class="[{ active: currentPassenger === i }]">{{ p.name }}</a>
+				</div>
+				<div class="data">
+					<div class="price">
+						<span><span style="color: limegreen;">$</span><input class="veh-sellinput" v-model.number="sellprice" :style="{ 'width': sellprice.toString().length * 1.15 + 'vw' }"></span>
+						<div>{{ d.i18n.price }}</div>
+					</div>
+					<a class="sell" @click="sellVehicleToPlayer()">{{ d.i18n.sell }}</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="info tab-vehicles" v-else>
+		<div class="no-veh">{{ d.i18n.noVeh }}</div>
+	</section>
+</script>
+
+<script type="text/x-template" id="tab-violations">
+	<section class="info tab-violations">
+		<div class="violations-free" v-if="!d.violations.length">
+			{{ d.i18n.congrats }}!<br>
+			{{ d.i18n.noViolat }}!
+		</div>
+		<div class="violations-total" v-if="d.violations.length" >
+			{{ d.i18n.total }}: <span style="color: tomato;">{{ d.violations.length }} {{ d.i18n.tabs[3] }}</span> - <span style="color: tomato;">{{ total }} {{ d.i18n.minutes }}</span> {{ d.i18n.jTime }}
+		</div>
+		<div v-if="d.violations.length" class="b-item" v-for="vio in d.violations"  @click="createGPSRoute('Prison')">
+			<img src="img/violations.png">
+			<span style="color: tomato;">{{ vio.time }} {{ d.i18n.minutes }}</span>
+			<div>{{ vio.text }}</div>
+		</div>
+	</section>
+</script>
+
+<script type="text/x-template" id="tab-help">
+	<section class="info tab-vehicles">
+		<div class="veh-list">
+			<a class="veh-item" v-for="(item, i) in d.i18n.help" @click="currentTab = i" :class="[{ active: currentTab === i }]">
+				<span>{{ item }}</span>
+			</a>
+		</div>
+		<div class="veh-info">
+			<div class="online-players" v-if="currentTab === 0">
+				<div class="online-players__title">{{ d.i18n.totalPlayers }}: {{ d.onlinePlayers.length }}</div>
+				<a class="online-players__item">
+					<span class="id">
+						id 
+						<a @click="sortOnlinePlayersById('increase')">↑</a>
+						<a @click="sortOnlinePlayersById('decrease')">↓</a>
+					</span>
+					<span class="name">
+						{{ d.i18n.Name }}
+						<a @click="sortOnlinePlayersByName('increase')">↑</a>
+						<a @click="sortOnlinePlayersByName('decrease')">↓</a>
+					</span>
+					<span class="loyality">
+						{{ d.i18n.loyality }}
+						<a @click="sortOnlinePlayersByLoyality('increase')">↑</a>
+						<a @click="sortOnlinePlayersByLoyality('decrease')">↓</a>
+					</span>
+				</a>
+				<a class="online-players__item" v-for="(item, i) in d.onlinePlayers">
+					<span class="id">{{ item.i }}</span>
+					<span class="name">{{ item.n }}</span>
+					<span class="loyality">{{ item.l }}</span>
+				</a>
+			</div>
+			<div class="gps" v-if="currentTab === 1">
+				<p class="help-p">{{ d.i18n.helpStart }}</p>
+			</div>
+			<div class="gps" v-if="currentTab === 2">
+				<div class="veh-info_props">
+					<div class="veh-info_prop">
+						<img src="img/carlock.png">
+						<span>Num +</span>
+						<div>{{ d.i18n.toggle }} {{ d.i18n.lock }}</div>
+					</div>
+					<div class="veh-info_prop">
+						<img src="img/carengine.png">
+						<span>Num 0</span>
+						<div>{{ d.i18n.toggle }} {{ d.i18n.engine }}</div>
+					</div>
+					<div class="veh-info_prop">
+						<img src="img/frontdoor.png">
+						<span>Num 7, Num 9</span>
+						<div>{{ d.i18n.front }} {{ d.i18n.windows }}</div>
+					</div>
+					<div class="veh-info_prop">
+						<img src="img/reardoor.png">
+						<span>Num 1, Num 3</span>
+						<div>{{ d.i18n.rear }} {{ d.i18n.windows }}</div>
+					</div>
+					<div class="veh-info_prop">
+						<img src="img/hood.png">
+						<span>Num .</span>
+						<div>{{ d.i18n.hood }}</div>
+					</div>
+					<div class="veh-info_prop">
+						<img src="img/trunk.png">
+						<span>Num 2</span>
+						<div>{{ d.i18n.trunk }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</script>
+
+<script type="text/x-template" id="tab-settings">
+	<section class="info tab-vehicles">
+		<div class="veh-list">
+			<a class="veh-item" v-for="(item, i) in d.i18n.settings" @click="currentTab = i" :class="[{ active: currentTab === i }]">
+				<span>{{ item }}</span>
+			</a>
+		</div>
+		<div class="veh-info">
+			<div class="gps" v-if="currentTab === 0">
+				<div style="display: flex">
+					<div style="width: 30%;">
+						<p class="help-p settings-title">{{ d.i18n.Change }} {{ d.i18n.language }}</p>
+						<div class="veh-list settings-lang">
+							<a class="veh-item" v-for="(item, i) in d.languages" @click="setLang(i)" >
+								<span style="font-size: 0.75em;">{{ item }}</span>
+							</a>
+						</div>
+					</div>
+					<div style="width: 70%">
+						<p class="help-p settings-title">{{ d.i18n.Change }} {{ d.i18n.password }}</p>
+						<div class="settings-pass">
+							<div>{{ d.i18n.Old }} {{ d.i18n.password }}:</div>
+							<input type="password" v-model="oldPass">
+							<div>{{ d.i18n.New }} {{ d.i18n.password }}:</div>
+							<input type="password" v-model="newPass">
+							<a @click="changePass()" >{{ d.i18n.Done }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</script>
+
+
+
+
+
+<script>
+let tabNumber = 0;
+
+class tab {
+	constructor(id, data = {}) {
+		this.data = function() { 
+			return data; 
+		}
+		this.methods = {
+			prettify: function(num) {
+				let n = num.toString();
+				const separator = " ";
+				return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + separator);
+			},
+
+			createGPSRoute(name, id = false) {
+				const d = { name: name, id: id }
+				mp.trigger("cMisc-CallServerEvent", "sGPS-CreateRoute", JSON.stringify(d));
+				app.exit();
+			},
+
+			setLang(id) {
+				mp.trigger("cMisc-CallServerEvent", "sMenu-SetLang", id);
+				app.exit();
+			},
+
+			changePass() {
+				const data = {
+					oldPass: this.oldPass,
+					newPass: this.newPass,
+				}
+				mp.trigger("cMisc-CallServerEvent", "sMenu-ChangePass", JSON.stringify(data));
+				app.exit();
+			},
+
+			callNineOneOne(id) {
+				mp.trigger("cMisc-CallServerEvent", "sMenu-RestoreVehicle", id);
+				app.exit();
+			},
+
+			sellVehicleToGov(id) {
+				mp.trigger("cMisc-CallServerEvent", "sVehicle-SellToGovernment", id);
+				app.exit();
+			},
+
+			sellVehicleToPlayer() {
+				const str = {
+					price: this.sellprice,
+					passengerId: this.d.passengers[this.currentPassenger].id,
+				}
+				mp.trigger("cMisc-CallServerEvent", "sVehicle-SellToPlayer", JSON.stringify(str));
+				app.exit();
+			},
+
+			sortOnlinePlayersById(d) {
+				if (d === "increase") {
+					this.d.onlinePlayers.sort(function(a, b) {
+						if (a.i === b.i) return;
+						return a.i > b.i ? 1 : -1;
+					});
+				}
+				else if (d === "decrease") {
+					this.d.onlinePlayers.sort(function(a, b) {
+						if (a.i === b.i) return;
+						return a.i < b.i ? 1 : -1;
+					});
+				}
+			},
+
+			sortOnlinePlayersByName(d) {
+				if (d === "increase") {
+					this.d.onlinePlayers.sort((a, b) => a.n.localeCompare(b.n));
+				}
+				else if (d === "decrease") {
+					this.d.onlinePlayers.sort((a, b) => b.n.localeCompare(a.n));
+				}
+			},
+
+			sortOnlinePlayersByLoyality(d) {
+				if (d === "increase") {
+					this.d.onlinePlayers.sort(function(a, b) {
+						if (a.l === b.l) return;
+						return a.l > b.l ? 1 : -1;
+					});
+				}
+				else if (d === "decrease") {
+					this.d.onlinePlayers.sort(function(a, b) {
+						if (a.l === b.l) return;
+						return a.l < b.l ? 1 : -1;
+					});
+				}
+			},
+		}
+		this.computed = {
+			total: function () {
+				let total = 0;
+				for (let data of this.d.violations) {
+					total += data.time;
+				}
+				return total;
+			},
+		}
+		const tab = Vue.component(`tab${tabNumber++}`, { 
+			props: ['d'],
+			data: this.data,
+			methods: this.methods,
+			computed: this.computed,
+
+			template: id,
+		});
+		return tab;
+	}
+}
+
+const home = new tab('#tab-home');
+
+const gps = new tab('#tab-gps', {
+	currentTab: 0,
+	businessId: 1,
+});
+
+const vehicles = new tab('#tab-vehicles', {
+	currentVeh: 0,
+	call911Comfirm: false,
+	sellToDealerComfirm: false,
+	sellToPlayer: false,
+	sellprice: 100000,
+	currentPassenger: 0,
+});
+
+const violations = new tab('#tab-violations');
+
+const help = new tab('#tab-help', {
+	currentTab: 0,
+});
+
+const settings = new tab('#tab-settings', {
+	currentTab: 0,
+	oldPass: '',
+	newPass: '',
+});
+
+
+const app = new Vue({
+	el: '#app',
+	data: {
+		pName: '',
+		currentTab: 0,
+		d: {
+			cash: 0,
+			loyality: 0,
+			vehicles: [
+				//{ id: 54, title: "Declasse Tornado Custom", number: "FDG45GF", price: 15500, fTank: 55, fRate: 15 },
+				//{ id: 4, title: "Declasse Tornado Custom", number: "FDG45GF", price: 15500, fTank: 55, fRate: 15 },
+			],
+			currentVehicleId: null,
+			passengers: [
+				//{ id: 4, name: "DerStr1k3r"},
+			],
+			violations: [
+				// { time: 5, text: "killed civilian dsad as sad sad sad asdas " },
+			],
+			languages: [ 'English', 'German'],
+			onlinePlayers: [
+				// { n: "Marko Cavalli", i: 0, l: 43 },
+			],
+			i18n: {
+				tabs: ['Home', 'GPS', 'Vehicles', 'Violations', 'Help', 'Settings'],
+				cash: 'cash',
+				loyality: 'loyality points',
+				gps: ["Basic", "Jobs", "Businesses"],
+				gasStation: 'Gas Station',
+				atm: 'ATM',
+				repairStation: 'Repair Station',
+				clothingShop: 'Clothing Shop',
+				barberShop: 'Barber Shop',
+				hospital: 'Central Hospital',
+				lspolicedepartment: 'LS Police Department',
+				prison: 'Prison',
+				orangeCollector: 'Orange collector',
+				cbDeliveryCourier: 'Clickin Bell Delivery Courier',
+				cbPaintJob: 'Two Paints',
+				muleTrucker: 'Mule Trucker',
+				minLoyality: 'Minimal loyality',
+				findBusBy: 'Find business by',
+				fTank: 'Fuel Tank',
+				price: 'price',
+				fRate: 'Fuel Rate',
+				findVehicle: 'Find Vehicle',
+				createRoute: 'Create GPS route',
+				call911: 'Call 911',
+				repairAndTransport: 'Repair and transport vehicle to police parking',
+				sellFor: 'Sell for',
+				toDealer: 'to Dealership',
+				sellToPassenger: 'Sell to passenger',
+				sell: 'Sell',
+				noVeh: 'You have no vehicles =(',
+				congrats: 'Congratulations',
+				noViolat: 'You are law-abiding citizen',
+				total: 'Total',
+				minutes: 'minutes',
+				jTime: 'jail time',
+				help: ["Online players", "Starting", "Vehicle controls"],
+				helpStart: 'Go to orange collector job and earn some money. Then you can personalize your character with buying some clothes and visiting barber shop.',
+				toggle: 'toggle',
+				lock: 'lock',
+				engine: 'engine',
+				front: 'front',
+				rear: 'rear',
+				windows: 'windows',
+				trunk: 'trunk',
+				hood: 'hood',
+				settings: ["Basic"],
+				Change: 'Change',
+				language: 'language',
+				password: 'password',
+				Old: 'Old',
+				New: 'New',
+				Done: 'Done',
+				Name: 'Name',
+				totalPlayers: "Total players",
+			}
+		},
+	},
+	computed: {
+		currentTabComponent: function () {
+			return 'tab' + this.currentTab;
+		},
+	},
+	methods: {
+		loadVehicles: function(str) {
+			this.d.vehicles = JSON.parse(str);
+		},
+		loadPassengers: function(str) {
+			this.d.passengers = JSON.parse(str);
+		},
+		loadViolations: function(str) {
+			this.d.violations = JSON.parse(str);
+		},
+		loadOnlinePlayers: function(str) {
+			this.d.onlinePlayers = JSON.parse(str);
+		},
+		exit: function() {
+			mp.trigger("cCloseCef"); 
+		},
+	},
+});
+
+function loadGerLang() {
+	app.d.i18n = {
+				tabs: ['Home', 'GPS', 'Fahrzeug', 'Verstöße', 'Hilfe', 'Einstellungen'],
+				cash: 'cash',
+				loyality: 'Loyalität',
+				gps: ["Basic", "Jobs", "Businesses"],
+				gasStation: 'Tankstellen',
+				atm: 'ATM',
+				repairStation: 'Reparaturstation',
+				clothingShop: 'Clothing Shop',
+				barberShop: 'Barber Shop',
+				hospital: 'Central Hospital',
+				lspolicedepartment: 'LS Police Department',
+				prison: 'Prison',
+				orangeCollector: 'Orange collector',
+				cbDeliveryCourier: 'Clickin Bell Delivery Courier',
+				cbPaintJob: 'Two Paints',
+				muleTrucker: 'Mule Trucker',
+				minLoyality: 'Minimal loyality',
+				findBusBy: 'Geschäft finden durch',
+				fTank: 'Treibstofftank',
+				price: 'Preis',
+				fRate: 'Kraftstoffmenge',
+				findVehicle: 'Fahrzeug finden',
+				createRoute: 'GPS-Route erstellen',
+				call911: 'Rufe 911',
+				repairAndTransport: 'Reparatur- und Transportfahrzeug zum Polizeiparkplatz',
+				sellFor: 'Verkaufen für',
+				toDealer: 'zum Autohaus',
+				sellToPassenger: 'An Passagier verkaufen',
+				sell: 'Verkaufen',
+				noVeh: 'Sie haben keine Fahrzeuge = (',
+				congrats: 'Herzlichen Glückwünsch',
+				noViolat: 'Sie sind ein gesetzestreuer Bürger',
+				total: 'Total',
+				minutes: 'Minuten',
+				jTime: 'jail time',
+				help: ["Online players", "Starting", "Fahrzeugsteuerungen"],
+				helpStart: 'Gehen Sie zum orangefarbenen Sammlerjob und verdienen Sie etwas Geld. Dann können Sie Ihren Charakter mit Kleidung und dem Friseurladen besuchen.',
+				toggle: 'toggle',
+				lock: 'lock',
+				engine: 'motor',
+				front: 'front',
+				rear: 'rear',
+				windows: 'windows',
+				trunk: 'Kofferraum',
+				hood: 'Motorhaube',
+				settings: ["Basic"],
+				Change: 'Ändern',
+				language: 'Sprache',
+				password: 'Passwort',
+				Old: 'Altes',
+				New: 'Neues',
+				Done: 'Erledigt',
+				Name: 'Name',
+				totalPlayers: "Total players",
+	}
+	
+}
+</script>

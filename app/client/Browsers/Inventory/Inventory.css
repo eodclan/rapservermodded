@@ -1,0 +1,57 @@
+﻿.controls {
+	position: absolute; right: -50%; top: 0;
+	width: 50%; height: 100%;
+	display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.lefted {
+	transform: translateX(-50%);
+}
+
+.inventory-window {
+	margin: 3vh 0;
+	width: 45%;
+}
+
+.items-block {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: calc(100% - 3.5vw - 6vh);
+}
+
+.items {
+  width: 50vw;
+  position: absolute;
+  left: 25vw;
+  top: 40vh;
+  height: 60vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+
+.item {
+display: flex;
+width: 100%;
+justify-content: space-between;
+font-size: 1.0vw;
+border: 1px solid #ddd;
+margin: 2% 0;
+}
+
+.item:hover {
+background-color: rgba(0, 0, 0, 0.2);
+}
+
+.item > div {
+padding: 2.0vh;
+text-transform: uppercase;
+}
+
+.item_price {
+color: limegreen;
+width: 100%;
+}

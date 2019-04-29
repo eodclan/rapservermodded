@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>RageV.de | Vehicle Menu Page</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../../assets/css/transparent/style.min.css" rel="stylesheet" />
+	<link href="../../assets/css/transparent/style-responsive.min.css" rel="stylesheet" />
+	<link href="../../assets/css/transparent/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../assets/plugins/pace/pace.min.js"></script>
+	<script src="../../vue.js"></script>
+	<!-- ================== VEHICLE BASE CSS ================== -->
+	<link rel="stylesheet" href="backend/css/style.css" />
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade">
+		<!-- begin login -->
+
+			<!-- begin login-content -->
+					<div class="panel panel-inverse" data-sortable-id="table-basic-1">
+						<!-- begin panel-heading -->
+						<div class="panel-heading ui-sortable-handle">
+							<div class="panel-heading-btn">
+								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+								<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+							</div>
+							<h4 class="panel-title">Fahrzeug Manager</h4>
+						</div>
+						<!-- end panel-heading -->
+						<!-- begin panel-body -->
+						<div class="panel-body">
+							<!-- begin table-responsive -->
+							<div class="table-responsive" style="top: 100px;">
+								<table class="table m-b-0" style="top: 100px;">
+									<thead>
+										<tr class="active">
+											<th>Info</th>
+											<th>Funktion</th>
+											<th>Auswahl</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="info">
+											<td><span style="position:relative;right:1px;top: -2px;left: 0px;"><img src="backend/img/engine.png"></span> Fahrzeug Motor</td>
+											<td>Motor</td>
+											<td>
+												<div class="switcher">
+													<input type="checkbox" name="switcher_checkbox_1" id="switcher_checkbox_1" checked="" value="1">
+													<label for="switcher_checkbox_1"></label>
+												</div>
+											</td>
+										</tr>
+										<tr class="info">
+											<td><span style="position:relative;right:1px;top: -2px;left: 0px;"><img src="./backend/img/light-off.png"></span> Fahrzeug Licht</td>
+											<td>Licht</td>
+											<td>
+												<div class="switcher">
+													<input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" checked="" value="1">
+													<label for="switcher_checkbox_2"></label>
+												</div>											
+											</td>
+										</tr>
+										<tr class="danger">
+											<td><span style="position:relative;right:1px;top: -2px;left: 0px;"><img src="./backend/img/giuLM2A.png"></span> Fahrzeug Sicherheitsgurt</td>
+											<td>Sicherheitsgurt</td>
+											<td>
+												<div class="switcher">
+													<input type="checkbox" name="switcher_checkbox_3" id="switcher_checkbox_3" checked="" value="1">
+													<label for="switcher_checkbox_3"></label>
+												</div>											
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- end table-responsive -->
+						</div>
+						<!-- end panel-body -->
+						<!-- begin hljs-wrapper -->
+						<div class="hljs-wrapper">
+							<pre>Hiermit kannst du dein Fahrzeug verwalten!</span>
+						</div>
+						<!-- end hljs-wrapper -->
+					</div>
+
+		<!-- end login -->
+		
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../../assets/js/theme/transparent.min.js"></script>
+	<script src="../../assets/js/apps.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="../../assets/plugins/highlight/highlight.common.js"></script>
+	<script src="../../assets/js/demo/render.highlight.js"></script>
+	<script type="text/javascript" src="backend/js/index.js"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+	<script>
+		$(document).ready(function() {
+			App.init();
+			Highlight.init();
+		});
+	</script></body>
+</html>

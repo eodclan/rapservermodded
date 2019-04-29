@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/noty.css" />
+</head>
+<body>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/noty.min.js"></script>
+	<script type="text/javascript">
+		function Browser_DisplayNotification(message, time, type, layout) {
+			new Noty({
+				type: type,
+				layout: layout,
+				theme: 'metroui',
+				text: message,
+				timeout: time,
+				progressBar: true,
+				animation: {
+					open: 'noty_effects_open',
+					close: 'noty_effects_close'
+				},
+				callbacks: {
+					afterClose: function() {
+						mp.trigger("DisplayingComplete");
+					}
+				}
+			}).show();
+		}
+	</script>
+</body>
+</html>

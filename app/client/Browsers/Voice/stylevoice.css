@@ -1,0 +1,97 @@
+﻿html {
+    height: 100%;
+    font-family: Segoe UI;
+    font-weight: 100;
+    color: #eee;
+    text-align: center;
+}
+  
+body {
+    background: transparent;
+}
+
+h1 {
+    color: white;
+	font-size: 1.25vw;
+    font-family: Segoe UI;
+    font-weight: 100;
+}
+
+.top-button {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 2vh;
+    font-size: 1.1vw;
+}
+  
+.top-button:hover {
+    font-size: 1.25vw;
+}
+
+.button {
+    width: 100%;
+    padding: 0.5vw 0;
+    margin: 0.5vw 0;
+    font-size: 1.25vw;
+    transition: 0.2s;
+    color: white;
+    border-width: 0vw;
+    border-style: solid;
+    border-color: #2e413f;
+    border-image: initial;
+    border-radius: 2vw;
+	-moz-box-shadow: 1px 1px 14px #000000;
+	-webkit-box-shadow: 1px 1px 14px #000000;
+	box-shadow: 1px 1px 14px #000000;
+}
+  
+.button:hover {
+	background: #09eb94;
+	color: #fff;
+	-moz-box-shadow: 1px 1px 14px #000000;
+	-webkit-box-shadow: 1px 1px 14px #000000;
+	box-shadow: 1px 1px 14px #000000;
+}
+  
+.button:active {
+    background: #66ccff;
+    border-width: 0vw;
+    border-style: solid;
+    border-color: #2e413f;
+    border-image: initial;
+    border-radius: 2vw;  
+
+}
+
+.voice {
+    display: block;
+    margin: 0 auto;
+	background-color: rgba(51, 44, 44, 0.9);
+	background: rgba(51, 44, 44, 0.9);
+	opacity: 0.9;	
+}
+
+.app {
+    position: fixed;
+    left: 0;
+    top: 30;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+  
+.app > section {
+    display: block;
+    margin: 0 auto;
+    height: 47.5vw;
+    width: 50vw;
+	background-color: rgba(51, 44, 44, 0.9);
+	background: rgba(51, 44, 44, 0.9);
+	color: rgba(51, 44, 44, 0.9);
+	-moz-box-shadow: 1px 1px 14px #000000;
+	-webkit-box-shadow: 1px 1px 14px #000000;
+	box-shadow: 1px 1px 14px #000000;
+	opacity: 0.9;	
+}

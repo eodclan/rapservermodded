@@ -1,0 +1,17 @@
+{
+	"maxplayers" : 1000,
+	"name" : "[GER/Voice] RageV.de | Dev Server", 
+	"gamemode" : "ragev", 
+	"stream-distance" : 500.0,
+	"announce" : false,
+	"port": 22005,
+        "sync-rate" : 85,
+        "encryption" : true,
+        "enable-http-security" : true,
+        "disallow-multiple-connections-per-ip" : true,
+        "url" : "https://ragev.de",
+        "language" : "de",
+        "allow-client-mods" : true,
+        "voice-chat" : true,
+        "voice-chat-sample-rate" : 48000
+}

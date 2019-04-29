@@ -1,0 +1,52 @@
+{
+  "name": "rpserver",
+  "version": "1.2.3",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@mysql/xdevapi": "8.0.13",
+    "crypto": "^1.0.1",
+    "fs": "0.0.1-security",
+    "https-proxy-agent": "^2.2.1",
+    "install": "^0.12.2",
+    "log4js": "^3.0.6",
+    "md5": "^2.2.1",
+    "modules": "^0.4.0",
+    "mysql": "github:mysqljs/mysql",
+    "mysql2": "^1.6.1",
+    "nodemailer": "^4.6.7",
+    "peer": "^0.2.10",
+    "timespan": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/ragemp-c": "github:CocaColaBear/types-ragemp-c#master",
+    "@types/ragemp-s": "github:CocaColaBear/types-ragemp-s#master",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.1",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production",
+    "watch": "webpack --mode=development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eodclan/rageserver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eodclan/rageserver/issues"
+  },
+  "homepage": "https://github.com/eodclan/rageserver#readme"
+}

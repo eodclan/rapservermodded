@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>RageV.de | Inventory Page</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../assets/plugins/pace/pace.min.js"></script>
+	<link rel="stylesheet" href="Inventory.css">
+	<script src="../vue.js"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+
+	<div id="page-container" class="fade page-without-sidebar page-header-fixed">
+	
+		<!-- START: section anpassen | entweder section oder div -->
+		<section id="app">
+		<!-- ENDE: section anpassen | entweder section oder div -->
+		
+		<div id="header" class="header navbar-default">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand"><span class="navbar-logo"></span> <b>Rage V</b> Inventory</a>
+			</div>
+			<ul class="navbar-nav navbar-right">
+				<li class="dropdown navbar-user">
+					<a href="#" class="dropdown-toggle" id="close-button" @click="exit">
+						<span class="d-none d-md-inline"><b>X</b></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="content" class="content">		
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+					
+					<!-- START: {{ titleText }} anpassen -->
+					
+					<h4 class="panel-title"><img src="inventory.png"> Inventory </h4>
+					
+					<!-- ENDE: {{ titleText }} anpassen -->
+				</div>
+                <div class="panel-body">
+
+                    <!-- START: Template anpassen -->
+
+			<div class="content">
+
+			<section class="form-group m-b-15" id="bag">
+				<a class="form-group m-b-15" style="font-size: 1.35vw;">
+					<span style="width: 70%">{{ title }}</span> | <span style="width: 30%">{{ mass }} / {{ maxMass }} {{ i18n.kg }}</span>
+				</a>
+				<br />
+				<div class="form-group m-b-15">
+					<b class="transition-02" :style="'width: ' + (100 * mass / maxMass) + '%;'" style="background: white; height: 5px;"></b>
+				</div>
+				<div class="form-group m-b-15">
+					<div class="item" v-for="(item, i) in items" @click="clickedOnItem(i)" :class="[{ lefted: currentItem === i }]" style="padding: 1em 0;">
+						<div style="width: 70%">{{ getItemName(item.n, lang) }}</div>
+						<div style="width: 30%">{{ item.c }} x {{ item.m }} {{ i18n.kg }}</div>
+						<div class="item_price">
+							<a class="btn btn-success btn-block btn-lg" v-if="interactInventory" @click="moveItem(i, 'bag')">{{ i18n.move }} {{ i18n.one }}</a>
+							<a class="btn btn-success btn-block btn-lg" v-if="interactInventory" @click="moveAllItems(i, 'bag')">{{ i18n.move }} {{ i18n.all }}</a>
+							<a class="btn btn-success btn-block btn-lg" v-if="item.u" @click="useItem(i, 'storage')">{{ i18n.use }} {{ i18n.one }}</a>
+							<a class="btn btn-success btn-block btn-lg" v-if="item.u" @click="useAllItems(i, 'storage')">{{ i18n.use }} {{ i18n.all }}</a>
+							<a class="btn btn-success btn-block btn-lg" @click="dropItem(i, 'bag')">{{ i18n.drop }} {{ i18n.one }}</a>
+							<a class="btn btn-success btn-block btn-lg" @click="dropAllItems(i, 'bag')">{{ i18n.drop }} {{ i18n.all }}</a>
+						</div>
+					</div>
+				</div>
+			</section>
+				<!-- ENDE: Template anpassen -->
+			</div>	
+				</div>
+			</div>
+		</div>
+		
+		<!-- START: section anpassen | entweder section oder div -->
+		</section>
+		<!-- ENDE: section anpassen | entweder section oder div -->
+		
+	</div>
+
+	<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../assets/js/theme/default.min.js"></script>
+	<script src="../assets/js/apps.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+</body>
+</html>
+
+
+
+<script>
+
+class inventory {
+	constructor(id) {
+		this.data = {
+			currentItem: false,
+			mass: 0,
+			maxMass: 10,
+			items: [
+				//{"n":{"eng":"Orangen - 12 Orangen","rus":"","ger":"","br":"","zhs":"","zht":""},"m":0.2,"c":8,"u":1},
+				//{"n":{"eng":"Steinpilz","rus":"","ger":"","br":"","zhs":"","zht":""},"m":0.12,"c":1,"u":1},
+				//{"n":{"eng":"Steinpilz","rus":"","ger":"","br":"","zhs":"","zht":""},"m":0.12,"c":1,"u":1},
+				//{"n":{"eng":"Steinpilz","rus":"","ger":"","br":"","zhs":"","zht":""},"m":0.12,"c":1,"u":1},
+				//{"n":{"eng":"Steinpilz","rus":"","ger":"","br":"","zhs":"","zht":""},"m":0.12,"c":1,"u":1},				
+			],
+			interactInventory: false,
+			lang: 'eng',
+			title: '',
+			i18n: {
+				kg: 'kg',
+				move: 'Move',
+				use: 'Use',
+				drop: "Drop",
+				one: 'one',
+				all: 'all',
+				tooBig: 'Weight too big'
+			},
+		};
+		this.methods = {
+			getItemName(obj, lang) {
+				if (!obj[lang]) return obj.eng;
+				return obj[lang];
+			},
+			
+			clickedOnItem: function (i) {
+				if (this.currentItem === i) this.currentItem = false;
+				else this.currentItem = i;
+			},
+
+			moveItem(i, to) {
+				mp.trigger("cMisc-CallServerEvent", "sInventory-MoveItem", i, to);
+			},
+
+			moveAllItems(i, to) {
+				mp.trigger("cMisc-CallServerEvent", "sInventory-MoveAllItems", i, to);
+			},
+			
+			dropItem(i, to) {
+				mp.trigger("cMisc-CallServerEvent", "sInventory-DropItem", i, to);
+			},
+
+			dropAllItems(i, to) {
+				mp.trigger("cMisc-CallServerEvent", "sInventory-DropAllItems", i, to);
+			},
+
+			useItem(i, storage) {
+				mp.trigger("cMisc-CallServerEvent", "sInventory-UseItem", i, storage);
+			},
+
+			useAllItems(i, storage) {
+				mp.trigger("cMisc-CallServerEvent", "sInventory-UseAllItems", i, storage);
+			},
+
+			roundNum: function(number, ends = 0) {
+				return parseFloat(number.toFixed(ends));
+			},
+						
+			updateWeight: function () {
+				this.mass = 0;
+				for (const item of this.items) {
+					this.mass = this.roundNum(this.mass + item.m * item.c, 1);
+				}
+			},
+			exit: function() {
+				mp.trigger("cMisc-CallServerEvent", "sInventory-Exit");
+				mp.trigger("cCloseCef"); 
+			},
+		};
+		
+		return new Vue({
+  			el: `${id}`,
+			data: this.data,
+			methods: this.methods,
+		});
+	}
+}
+var bag = new inventory('#bag');
+bag.title = "Your inventory";
+var storage = new inventory('#storage');
+
+
+function loadBag(bagStr) {
+	bag.items = JSON.parse(bagStr);
+	bag.updateWeight();
+}
+
+function loadStorage(storageStr) {
+	storage.items = JSON.parse(storageStr);
+	storage.updateWeight();
+	bag.interactInventory = storage;
+	storage.interactInventory = bag;
+}
+
+
+function loadGerLang() {
+	bag.title = "Dein Inventar";
+	storage.i18n = bag.i18n = {
+		kg: 'kg',
+		move: 'verschieben',
+		use: 'Benutzen',
+		drop: "fallen lassen",
+		one: 'ein',
+		all: 'alle',
+		tooBig: 'Gewicht zu groß',
+	}
+	bag.lang = storage.lang = 'ger';
+}
+
+</script>

@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>RageV.de | Register Page</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="../assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../assets/plugins/pace/pace.min.js"></script>
+	<script src="../vue.js"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body class="pace-top">
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade">
+		<!-- begin register -->
+		<div class="register register-with-news-feed">
+			<!-- begin news-feed -->
+			<div class="news-feed">
+				<div id="player" class="news-image">
+					<video width="100%" height="100%" autoplay="autoplay" loop="loop" muted="muted" volume="0">
+						<source src="https://rpdeluxe.ml/intro.webm" type="video/webm" />
+					</video>
+				</div>
+				<div class="news-caption">
+					<h4 class="caption-title"><b>RageV</b> Information</h4>
+					<p>
+						Erstelle deinen RageV.de Account. Es ist kostenlos und wird es immer sein.
+					</p>
+				</div>
+			</div>
+			<!-- end news-feed -->
+			<!-- begin right-content -->
+			<div class="right-content">
+				<!-- begin register-header -->
+				<div class="register-header">
+					<div class="brand">
+						<span class="logo"></span> <b>Rage</b> V | Registrieren
+						<small>Willkommen bei RageV.de! Beginne dein Wahres Leben...</small>
+					</div>
+					<div class="icon">
+						<i class="fa fa-sign-in"></i>
+					</div>
+				</div>
+				<!-- end register-header -->
+				<!-- begin register-content -->
+				<div class="register-content">
+					<section class="app" id="app">
+						<label class="control-label">Email <span class="text-danger">*</span></label>
+						<div class="row m-b-15">
+							<div class="col-md-12">
+								<input type="email" class="form-control" placeholder="E-Mail Adresse" v-model="enteredMail" :disabled="mailChecked" :class="{ checked: mailChecked }" autofocus>
+							</div>
+						</div>
+						<label class="control-label" v-if="!mailChecked">Code <span class="text-danger">*</span></label>
+						<div class="row m-b-15" v-if="!mailChecked">
+							<div class="col-md-12" v-if="!mailChecked">
+								<input type="text" class="form-control" placeholder="Code" @input="verifyCode" v-model="enteredCode">
+								<div class="btn btn-primary btn-block btn-lg" @click="mailGetCode">Code anfordern</div>
+							</div>
+						</div>						
+						<label class="control-label" v-if="mailChecked">Charakter <span class="text-danger">Informationen</span></label>
+						<div class="row m-b-15" v-if="mailChecked">
+							<div class="col-md-12" v-if="mailChecked">
+								<input type="text" class="form-control" placeholder="Vorname" v-model="enteredFirstname" :class="{ checked: nameAvailable }" @input="resetNameChecked">
+								<input type="text" class="form-control" placeholder="Nachname" v-model="enteredLastname" :class="{ checked: nameAvailable }" @input="resetNameChecked">
+								<div class="btn btn-primary btn-block btn-lg" @click="checkUsername" v-if="!nameAvailable">Überprüfen Sie den Benutzername</div>
+								<div class="btn btn-primary btn-block btn-lg" @click="confirmUsername" v-if="nameAvailable && !nameChecked">Bestätige deine Registrierung</div>
+							</div>
+						</div>
+						<label class="control-label" v-if="mailChecked && nameChecked">Dein Passwort <span class="text-danger">*</span></label>
+						<div class="row m-b-15" v-if="mailChecked && nameChecked">
+							<div class="col-md-12" v-if="mailChecked && nameChecked">
+								<input type="text" class="form-control" placeholder="Passwort" v-model="enteredPass1" :class="{ checked: passChecked }">
+								<input type="text" class="form-control" placeholder="Passwort bestätigen" v-model="enteredPass2" @input="verifyPass" :class="{ checked: passChecked }">
+							</div>
+						</div>
+						<button class="btn btn-success btn-block btn-lg" v-if="mailChecked && nameChecked && passChecked" @click="createAccount">Account anlegen</button>
+						<button class="btn btn-success btn-block btn-lg" v-if="errorMessage">{{ errorMessage }}</button>
+						<button class="btn btn-success btn-block btn-lg" style="background: limegreen;" v-if="infoMessage">{{ infoMessage }}</button>
+						<div class="btn btn-primary btn-block btn-lg" @click="goToLoginWindow">Hast du schon einen Account? Anmeldung</div>
+
+						<hr />
+						<p class="text-center">
+							&copy; RageV.de. All Right Reserved.
+						</p>
+					</section>
+				</div>
+				<!-- end register-content -->
+			</div>
+			<!-- end right-content -->
+		</div>
+		<!-- end register -->
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../assets/js/theme/default.min.js"></script>
+	<script src="../assets/js/apps.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+</body>
+</html>
+<script>
+const app = new Vue({
+	el: '#app',
+	data: {
+		mailChecked: false,
+		nameAvailable: false,
+		nameChecked: false,
+		passChecked: false,
+		enteredCode: "",
+		enteredMail: "",
+		enteredFirstname: "",
+		enteredLastname: "",
+		enteredPass1: "",
+		enteredPass2: "",
+		lang: "eng",
+		errorMessage: "",
+		infoMessage: "",
+	},
+	methods: {
+		mailGetCode: function () {
+			mp.trigger("cMisc-CallServerEvent", "sRegister-TryGetCodeToRegister", this.enteredMail.toLowerCase());
+		},
+
+		setMailChecked: function () {
+			this.mailChecked = true;
+		},
+
+		verifyCode: function () {
+			if (this.enteredCode.length === 3) {
+				mp.trigger("cMisc-CallServerEvent", "sRegister-TryValidateEmailWithCode", +this.enteredCode);
+			}
+		},
+
+		checkUsername: function () {
+			const obj = {
+				firstName: this.enteredFirstname,
+				lastName: this.enteredLastname,
+			}
+			mp.trigger("cMisc-CallServerEvent", "sRegister-CheckUsername", JSON.stringify(obj));
+		},
+
+		setNameAvailable: function () {
+			this.nameAvailable = true;
+		},
+
+		confirmUsername: function () {
+			this.nameChecked = true;
+		},
+
+		resetNameChecked: function () {
+			this.nameChecked = false;
+			this.nameAvailable = false;
+		},
+
+
+		verifyPass: function () {
+			if (this.enteredPass1 === this.enteredPass2) {
+				this.passChecked = true;
+			}
+			else {
+				this.passChecked = false;
+			}
+		},
+		createAccount: function () {
+			const obj = {
+				email: this.enteredMail.toLowerCase(),
+				firstName: this.enteredFirstname,
+				lastName: this.enteredLastname,
+				pass: this.enteredPass1,
+			}
+			mp.trigger("cMisc-CallServerEvent", "sRegister-CreateAccount", JSON.stringify(obj));
+		},
+
+		showError(text) {
+			this.infoMessage = "";
+			this.errorMessage = text;
+			setTimeout(() => {
+				this.errorMessage = "";
+			}, 5000);
+		},
+
+		showInfo(text) {
+			this.errorMessage = "";
+			this.infoMessage = text;
+			setTimeout(() => {
+				this.infoMessage = "";
+			}, 5000);
+		},
+
+
+		goToLoginWindow: function () {
+			mp.trigger("cLogin-ShowLoginWindow");
+		},
+	}
+});
+</script>

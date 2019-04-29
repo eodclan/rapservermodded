@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>RageV.de | LS Hospital Garage Page</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="../../../assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="../../../assets/plugins/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../assets/plugins/font-awesome/5.3/css/all.min.css" rel="stylesheet" />
+	<link href="../../../assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="../../../assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="../../../assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="../../../assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="../../../assets/plugins/pace/pace.min.js"></script>
+	<link rel="stylesheet" href="main.css">
+	<script src="../../../vue.js"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+
+	<div id="page-container" class="fade page-without-sidebar page-header-fixed">
+	
+		<!-- START: section anpassen | entweder section oder div -->
+		<section id="app">
+		<!-- ENDE: section anpassen | entweder section oder div -->
+		
+		<div id="header" class="header navbar-default">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand"><span class="navbar-logo"></span> <b>Rage V</b> {{ title }}</a>
+			</div>
+			<ul class="navbar-nav navbar-right">
+				<li class="dropdown navbar-user">
+					<a href="#" class="dropdown-toggle" id="close-button" @click="exit">
+						<span class="d-none d-md-inline"><b>X</b></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="content" class="content">		
+			<div class="panel panel-inverse">
+				<div class="panel-heading">
+					<div class="panel-heading-btn">
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+					</div>
+					
+					<!-- START: {{ titleText }} anpassen -->
+					
+					<h4 class="panel-title"><img src="garage.png"> {{ title }} </h4>
+					
+					<!-- ENDE: {{ titleText }} anpassen -->
+				</div>
+                <div class="panel-body">
+
+                    <!-- START: Template anpassen -->
+
+			<div class="content">
+			<link rel="stylesheet" :href="css">
+			<div class="form-control-lg">
+				{{ title }}	<span>{{ titleInfo }}</span>
+			</div>
+		
+			<section class="form-group m-b-15">
+				<div class="item" v-for="floor in floors" @click="enter(floor)">
+					<div>{{ floor }}</div>
+				</div>
+			</section>
+				
+				<!-- ENDE: Template anpassen -->
+				
+				</div>
+			</div>
+		</div>
+		
+		<!-- START: section anpassen | entweder section oder div -->
+		</section>
+		<!-- ENDE: section anpassen | entweder section oder div -->
+		
+	</div>
+
+	<script src="../../../assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../../../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="../../../assets/plugins/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="../../../assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="../../../assets/crossbrowserjs/respond.min.js"></script>
+		<script src="../../../assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="../../../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../../../assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="../../../assets/js/theme/default.min.js"></script>
+	<script src="../../../assets/js/apps.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+</body>
+</html>
+
+<script>
+const app = new Vue({
+	el: '#app',
+	data: {
+		id: 0,
+		title: "LS Hospital Garage",
+		css: "hospital.css",
+		titleInfo: "choose the lift", 
+		floors: [0, -1, -2, -3, -4, -5],
+	},
+	methods: {
+		enter: function(floor) {
+			mp.trigger("cMisc-CallServerEvent", "sGarage-EnterFloorByVisitorsLift", this.id, floor);
+			this.exit();
+		},
+		
+		exit: function() {
+			mp.trigger("cCloseCef"); 
+		},
+	}
+});
+
+
+
+function loadRusLang() {
+	app.titleInfo = "Выберите этаж";
+}
+
+function loadGerLang() {
+	app.titleInfo = "wählen sie den Lift";
+}
+
+function loadBrLang() {
+	app.titleInfo = "Escolha o PISO";
+}
+
+function loadZhsNLang() {
+	app.titleInfo = "选择楼层";
+}
+
+function loadZhtLang() {
+	app.titleInfo = "選擇樓層";
+}
+</script>
