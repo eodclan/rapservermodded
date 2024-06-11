@@ -14,7 +14,7 @@
     "modules": "^0.4.0",
     "mysql": "github:mysqljs/mysql",
     "mysql2": "^1.6.1",
-    "nodemailer": "^4.6.7",
+    "nodemailer": "^6.9.9",
     "peer": "^0.2.10",
     "timespan": "^2.3.0"
   },
