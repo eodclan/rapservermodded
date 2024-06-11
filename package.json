@@ -15,7 +15,7 @@
     "mysql": "github:mysqljs/mysql",
     "mysql2": "^1.6.1",
     "nodemailer": "^4.6.7",
-    "peer": "^0.2.10",
+    "peer": "^1.0.2",
     "timespan": "^2.3.0"
   },
   "devDependencies": {
