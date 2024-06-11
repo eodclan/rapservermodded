@@ -13,7 +13,7 @@
     "md5": "^2.2.1",
     "modules": "^0.4.0",
     "mysql": "github:mysqljs/mysql",
-    "mysql2": "^1.6.1",
+    "mysql2": "^3.9.8",
     "nodemailer": "^4.6.7",
     "peer": "^0.2.10",
     "timespan": "^2.3.0"
